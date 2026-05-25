@@ -3,6 +3,11 @@
   imports = [
     ./hardware-configuration.nix
     ./networking.nix
+    ./containers/nats.nix
+    # emqx: deferred - nats built-in mqtt replaces the mqtt->nats bridge for phase 2
+    # ./containers/emqx.nix
+    ./containers/influxdb.nix
+    ./containers/minio.nix
   ];
 
   system.stateVersion = "25.05";
@@ -37,13 +42,16 @@
     curl
     htop
     tcpdump
+    natscli
+    mosquitto
   ];
 
   security.sudo.wheelNeedsPassword = false;
 
-  # podman for quadlets (used in phase 2+)
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
   };
+
+  virtualisation.oci-containers.backend = "podman";
 }

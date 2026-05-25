@@ -61,8 +61,12 @@ in
           iifname { "vlan20", "vlan30" } udp dport { 53, 67 } accept
           iifname { "vlan20", "vlan30" } tcp dport 53 accept
 
-          iifname "vlan20" tcp dport { 1883, 8883 } accept
-          iifname { "vlan10", "vlan20" } tcp dport 4222 accept
+          iifname { "${nic}", "vlan10", "vlan20" } tcp dport 1883 accept
+          iifname { "vlan10", "vlan20" } tcp dport { 4222, 7422 } accept
+
+          iifname { "${nic}", "vlan10" } tcp dport 8086 accept
+          iifname { "${nic}", "vlan10" } tcp dport { 9000, 9001 } accept
+          iifname { "${nic}", "vlan10" } tcp dport 18083 accept
         }
 
         chain forward {
