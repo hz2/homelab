@@ -1,0 +1,11 @@
+version: v2
+clean: true
+plugins:
+  - remote: buf.build/protocolbuffers/python
+    out: ../gen/python
+  - remote: buf.build/grpc/python
+    out: ../gen/python
+  - remote: buf.build/bufbuild/es
+    out: ../gen/ts
+    opt:
+      - target=ts

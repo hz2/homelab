@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package sensor.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+
+message SensorReading {
+  string sensor_id = 1;
+  string node_id = 2;
+  string metric = 3;
+  double value = 4;
+  string unit = 5;
+  google.protobuf.Timestamp timestamp = 6;
+}
+
+message SensorInfo {
+  string sensor_id = 1;
+  string node_id = 2;
+  string type = 3;
+  google.protobuf.Timestamp last_seen = 4;
+}
+
+message ListSensorsRequest {
+  string node_id = 1;
+}
+
+message ListSensorsResponse {
+  repeated SensorInfo sensors = 1;
+}
+
+message StreamReadingsRequest {
+  string sensor_id = 1;
+  string node_id = 2;
+}
+
+service SensorService {
+  rpc ListSensors(ListSensorsRequest) returns (ListSensorsResponse);
+  rpc StreamReadings(StreamReadingsRequest) returns (stream SensorReading);
+}

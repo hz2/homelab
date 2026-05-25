@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package camera.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+
+enum SourceType {
+  SOURCE_TYPE_UNSPECIFIED = 0;
+  SOURCE_TYPE_RTSP = 1;
+  SOURCE_TYPE_USB = 2;
+}
+
+message Camera {
+  string camera_id = 1;
+  string name = 2;
+  SourceType source_type = 3;
+  string source_url = 4;
+  bool online = 5;
+}
+
+message DetectionEvent {
+  string camera_id = 1;
+  string label = 2;
+  float confidence = 3;
+  google.protobuf.Timestamp timestamp = 4;
+  bytes snapshot = 5;
+}
+
+message ListCamerasRequest {}
+
+message ListCamerasResponse {
+  repeated Camera cameras = 1;
+}
+
+message StreamEventsRequest {
+  string camera_id = 1;
+}
+
+service CameraService {
+  rpc ListCameras(ListCamerasRequest) returns (ListCamerasResponse);
+  rpc StreamEvents(StreamEventsRequest) returns (stream DetectionEvent);
+}

@@ -1,3 +1,6 @@
 tmp
 result
 .claude
+# generated protobuf stubs - run `cd proto && buf generate` to recreate
+gen/
+services/target/

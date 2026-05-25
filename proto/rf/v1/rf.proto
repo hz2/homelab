@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package rf.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+
+enum Protocol {
+  PROTOCOL_UNSPECIFIED = 0;
+  PROTOCOL_SUBGHZ = 1;
+  PROTOCOL_NFC = 2;
+  PROTOCOL_INFRARED = 3;
+}
+
+message RFEvent {
+  Protocol protocol = 1;
+  string raw_data = 2;
+  int32 frequency_hz = 3;
+  float rssi = 4;
+  string source = 5;
+  google.protobuf.Timestamp timestamp = 6;
+}
+
+message ListEventsRequest {
+  Protocol protocol = 1;
+  google.protobuf.Timestamp since = 2;
+}
+
+message ListEventsResponse {
+  repeated RFEvent events = 1;
+}
+
+message StreamEventsRequest {}
+
+service RFService {
+  rpc ListEvents(ListEventsRequest) returns (ListEventsResponse);
+  rpc StreamEvents(StreamEventsRequest) returns (stream RFEvent);
+}
