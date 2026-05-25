@@ -68,7 +68,7 @@ in
         chain forward {
           type filter hook forward priority filter; policy drop;
           ct state { established, related } accept
-          iifname { "vlan20", "vlan30" } oifname "vlan10" accept
+          iifname { "vlan20", "vlan30" } oifname "${nic}" accept
         }
 
         chain output {
@@ -79,7 +79,7 @@ in
       table ip nat {
         chain postrouting {
           type nat hook postrouting priority srcnat;
-          oifname "vlan10" masquerade
+          oifname "${nic}" masquerade
         }
       }
     '';
