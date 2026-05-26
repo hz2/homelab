@@ -3,6 +3,14 @@ mqtt:
   host: localhost
   port: 1883
 
+# go2rtc connects once to the axis camera and restreams to everything else.
+# ffmpeg consumes the local restream; browser live view uses webrtc via port 8555.
+# credentials are substituted by preStart sed before frigate reads this file.
+go2rtc:
+  streams:
+    axis:
+      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@10.0.30.116/axis-media/media.amp
+
 detectors:
   default:
     type: cpu
@@ -11,13 +19,15 @@ cameras:
   axis:
     ffmpeg:
       # hwaccel_args: preset-vaapi  # disabled: intel iHD hwdownload fails for detect pipeline
+      input_args: preset-rtsp-tcp
       inputs:
-        # using current dhcp lease; switches to 10.0.30.10 after lease renews
-        # credentials injected from /var/lib/frigate/secrets.env on host, never in git
-        - path: rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@10.0.30.116/axis-media/media.amp
+        # go2rtc restream on loopback — no direct connection to camera from ffmpeg
+        - path: rtsp://127.0.0.1:8554/axis
           roles:
             - detect
             - record
+    live:
+      stream_name: axis  # use go2rtc for webrtc live view (sub-second latency)
     detect:
       width: 1920
       height: 1080

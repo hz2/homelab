@@ -70,6 +70,7 @@ in
           iifname { "${nic}", "vlan10" } tcp dport 18083 accept
 
           iifname { "${nic}", "vlan10" } tcp dport { 5000, 8554, 8555 } accept
+          iifname { "${nic}", "vlan10" } udp dport 8555 accept
 
           # grpc services: sensor-api, camera-api
           iifname { "${nic}", "vlan10" } tcp dport { 50051, 50052 } accept
