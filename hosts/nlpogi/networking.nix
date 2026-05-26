@@ -74,8 +74,8 @@ in
           # grpc services: sensor-api, camera-api
           iifname { "${nic}", "vlan10" } tcp dport { 50051, 50052 } accept
 
-          # caddy reverse proxy
-          iifname { "${nic}", "vlan10" } tcp dport 80 accept
+          # caddy reverse proxy (https with tls internal)
+          iifname { "${nic}", "vlan10" } tcp dport { 80, 443 } accept
         }
 
         chain forward {

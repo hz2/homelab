@@ -18,8 +18,7 @@ session:
   secret: '{AUTHELIA_SESSION_SECRET}'
   cookies:
     - domain: 'lab.local'
-      authelia_url: 'http://lab.local'
-      default_redirection_url: 'http://lab.local'
+      authelia_url: 'https://lab.local'
       expiration: '1h'
       inactivity: '5m'
 

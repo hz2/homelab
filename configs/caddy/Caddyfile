@@ -1,9 +1,10 @@
 {
-    # no automatic https; internal lab network only
-    auto_https off
+    # no acme/letsencrypt; tls internal uses caddy's built-in local CA
 }
 
-:80 {
+lab.local {
+    tls internal
+
     # authelia login page and api endpoints bypass forward auth
     @authelia path /auth* /api/authz*
     handle @authelia {
