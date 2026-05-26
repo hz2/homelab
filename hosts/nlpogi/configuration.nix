@@ -8,6 +8,7 @@
     # ./containers/emqx.nix
     ./containers/influxdb.nix
     ./containers/minio.nix
+    ./containers/frigate.nix
   ];
 
   system.stateVersion = "25.05";
@@ -47,6 +48,11 @@
   ];
 
   security.sudo.wheelNeedsPassword = false;
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [ intel-media-driver ];
+  };
 
   virtualisation.podman = {
     enable = true;

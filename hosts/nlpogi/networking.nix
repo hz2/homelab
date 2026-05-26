@@ -38,6 +38,7 @@ in
         "10.0.20.100,10.0.20.200,255.255.255.0,86400"
         "10.0.30.100,10.0.30.200,255.255.255.0,86400"
       ];
+      "dhcp-host" = [ "b8:a4:4f:33:46:06,10.0.30.10,axis" ];
       server = [ "192.168.1.1" ];
       "no-resolv" = true;
     };
@@ -67,6 +68,8 @@ in
           iifname { "${nic}", "vlan10" } tcp dport 8086 accept
           iifname { "${nic}", "vlan10" } tcp dport { 9000, 9001 } accept
           iifname { "${nic}", "vlan10" } tcp dport 18083 accept
+
+          iifname { "${nic}", "vlan10" } tcp dport { 5000, 8554, 8555 } accept
         }
 
         chain forward {

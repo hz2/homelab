@@ -1,0 +1,40 @@
+mqtt:
+  enabled: true
+  host: localhost
+  port: 1883
+
+detectors:
+  default:
+    type: cpu
+
+cameras:
+  axis:
+    ffmpeg:
+      # hwaccel_args: preset-vaapi  # disabled: intel iHD hwdownload fails for detect pipeline
+      inputs:
+        # using current dhcp lease; switches to 10.0.30.10 after lease renews
+        # credentials injected from /var/lib/frigate/secrets.env on host, never in git
+        - path: rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@10.0.30.116/axis-media/media.amp
+          roles:
+            - detect
+            - record
+    detect:
+      width: 1920
+      height: 1080
+      fps: 5
+      enabled: true
+
+record:
+  enabled: true
+  retain:
+    days: 7
+    mode: all
+  events:
+    retain:
+      default: 14
+      mode: motion
+
+snapshots:
+  enabled: true
+  retain:
+    default: 14
