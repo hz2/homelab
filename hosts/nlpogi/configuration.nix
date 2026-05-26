@@ -9,6 +9,8 @@
     ./containers/influxdb.nix
     ./containers/minio.nix
     ./containers/frigate.nix
+    ./containers/caddy.nix
+    ./containers/authelia.nix
     ./services/sensor.nix
     ./services/camera.nix
     ./services/influx-writer.nix

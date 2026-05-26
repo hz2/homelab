@@ -1,0 +1,35 @@
+{
+    # no automatic https; internal lab network only
+    auto_https off
+}
+
+:80 {
+    # authelia login page and api endpoints bypass forward auth
+    @authelia path /auth* /api/authz*
+    handle @authelia {
+        reverse_proxy localhost:9091
+    }
+
+    handle {
+        forward_auth localhost:9091 {
+            uri /api/authz/forward-auth
+            copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+        }
+
+        # grpc services: path starts with package prefix (e.g. /sensor.v1.SensorService/Method)
+        @grpc_sensor path_regexp ^/sensor\.v1
+        handle @grpc_sensor {
+            reverse_proxy localhost:50051
+        }
+
+        @grpc_camera path_regexp ^/camera\.v1
+        handle @grpc_camera {
+            reverse_proxy localhost:50052
+        }
+
+        # default: frigate web ui and api
+        handle {
+            reverse_proxy localhost:5000
+        }
+    }
+}
