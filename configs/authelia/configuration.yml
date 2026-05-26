@@ -1,6 +1,7 @@
 ---
 server:
   address: 'tcp://0.0.0.0:9091'
+  path: 'auth'
 
 log:
   level: 'info'
@@ -18,7 +19,7 @@ session:
   secret: '{AUTHELIA_SESSION_SECRET}'
   cookies:
     - domain: 'lab.local'
-      authelia_url: 'https://lab.local'
+      authelia_url: 'https://lab.local/auth'
       expiration: '1h'
       inactivity: '5m'
 
