@@ -208,9 +208,12 @@ name = "camera"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "async-nats",
  "futures",
  "prost",
  "prost-types",
+ "serde",
+ "serde_json",
  "shared",
  "tokio",
  "tokio-stream",
@@ -918,6 +921,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "async-nats",
+ "futures",
  "reqwest",
  "serde",
  "serde_json",
@@ -1722,9 +1726,12 @@ name = "sensor"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "async-nats",
  "futures",
  "prost",
  "prost-types",
+ "serde",
+ "serde_json",
  "shared",
  "tokio",
  "tokio-stream",

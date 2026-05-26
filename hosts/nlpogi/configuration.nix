@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, homelabServices, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -9,6 +9,9 @@
     ./containers/influxdb.nix
     ./containers/minio.nix
     ./containers/frigate.nix
+    ./services/sensor.nix
+    ./services/camera.nix
+    ./services/influx-writer.nix
   ];
 
   system.stateVersion = "25.05";

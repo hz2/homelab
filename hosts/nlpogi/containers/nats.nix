@@ -64,6 +64,10 @@ in
       nats --server=nats://localhost:4222 stream add RESULTS \
         --subjects="results.>" --storage=file --retention=limits \
         --max-age=7d --replicas=1 --defaults 2>/dev/null || true
+
+      nats --server=nats://localhost:4222 stream add FRIGATE \
+        --subjects="frigate.>" --storage=file --retention=limits \
+        --max-age=7d --replicas=1 --defaults 2>/dev/null || true
     '';
   };
 }

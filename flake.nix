@@ -50,9 +50,23 @@
       cargoClippyExtraArgs = "--all-features -- -D warnings";
       doNotPostBuildInstallCargoBinaries = true;
     });
+
+    homelabServices = craneLib.buildPackage (servicesArgs // {
+      cargoArtifacts = servicesDeps;
+      doNotPostBuildInstallCargoBinaries = true;
+      installPhase = ''
+        runHook preInstall
+        mkdir -p $out/bin
+        find services/target/release -maxdepth 1 -type f -executable \
+          ! -name "*.so" \
+          -exec install -Dm755 {} $out/bin/ \;
+        runHook postInstall
+      '';
+    });
   in {
     nixosConfigurations.nlpogi = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
+      specialArgs = { inherit homelabServices; };
       modules = [
         ./hosts/nlpogi/configuration.nix
         ./hosts/nlpogi/disk.nix
@@ -71,21 +85,7 @@
 
     # rust services workspace - requires services/Cargo.lock to exist
     # generate with: cd services && cargo generate-lockfile (inside nix develop)
-    packages.x86_64-linux.services = craneLib.buildPackage (servicesArgs // {
-      cargoArtifacts = servicesDeps;
-      # crane's postBuild install hook calls `cargo metadata` without --manifest-path
-      # which fails since there's no Cargo.toml at the source root (it's in services/).
-      # skip crane's hook and install from the known target path directly.
-      doNotPostBuildInstallCargoBinaries = true;
-      installPhase = ''
-        runHook preInstall
-        mkdir -p $out/bin
-        find services/target/release -maxdepth 1 -type f -executable \
-          ! -name "*.so" \
-          -exec install -Dm755 {} $out/bin/ \;
-        runHook postInstall
-      '';
-    });
+    packages.x86_64-linux.services = homelabServices;
 
     checks.x86_64-linux.services-clippy = servicesClippy;
 
