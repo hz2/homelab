@@ -9,7 +9,7 @@ mqtt:
 go2rtc:
   streams:
     axis:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@10.0.30.116/axis-media/media.amp
+      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@10.0.30.116/axis-media/media.amp#transport=tcp
 
 detectors:
   default:
@@ -19,7 +19,6 @@ cameras:
   axis:
     ffmpeg:
       # hwaccel_args: preset-vaapi  # disabled: intel iHD hwdownload fails for detect pipeline
-      input_args: preset-rtsp-tcp
       inputs:
         # go2rtc restream on loopback — no direct connection to camera from ffmpeg
         - path: rtsp://127.0.0.1:8554/axis
