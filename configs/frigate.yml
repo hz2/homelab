@@ -3,6 +3,10 @@ mqtt:
   host: localhost
   port: 1883
 
+# authelia handles auth at the caddy gateway; disable frigate's built-in auth
+auth:
+  enabled: false
+
 # go2rtc connects once to the axis camera and restreams to everything else.
 # ffmpeg consumes the local restream; browser live view uses webrtc via port 8555.
 # credentials are substituted by preStart sed before frigate reads this file.
