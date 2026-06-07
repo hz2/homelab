@@ -2,6 +2,11 @@
     # no acme/letsencrypt; tls internal uses caddy's built-in local CA
 }
 
+jsondev.lab.local {
+    tls internal
+    reverse_proxy localhost:3000
+}
+
 lab.local {
     tls internal
 

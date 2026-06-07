@@ -11,6 +11,7 @@
     ./containers/frigate.nix
     ./containers/caddy.nix
     ./containers/authelia.nix
+    ./containers/jsondev.nix
     ./services/sensor.nix
     ./services/camera.nix
     ./services/influx-writer.nix
