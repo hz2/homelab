@@ -14,7 +14,7 @@ auth:
 go2rtc:
   streams:
     axis:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@10.0.30.116/axis-media/media.amp
+      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@10.0.30.10/axis-media/media.amp
 
 detectors:
   default:
