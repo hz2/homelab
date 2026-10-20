@@ -13,6 +13,7 @@
     # --without-auth: no token required in phase 2; harden in phase 10
     cmd = [
       "serve"
+      # old hostname on purpose: node-id names the on-disk data path, changing it hides existing data
       "--node-id=nlpogi"
       "--object-store=file"
       "--data-dir=/var/lib/influxdb3"

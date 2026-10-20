@@ -64,12 +64,12 @@
       '';
     });
   in {
-    nixosConfigurations.nlpogi = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nipogi = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit homelabServices; };
       modules = [
-        ./hosts/nlpogi/configuration.nix
-        ./hosts/nlpogi/disk.nix
+        ./hosts/nipogi/configuration.nix
+        ./hosts/nipogi/disk.nix
         disko.nixosModules.disko
         sops-nix.nixosModules.sops
       ];
@@ -80,7 +80,7 @@
     packages.x86_64-linux.installer =
       (nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./hosts/nlpogi/installer.nix ];
+        modules = [ ./hosts/nipogi/installer.nix ];
       }).config.system.build.isoImage;
 
     # rust services workspace - requires services/Cargo.lock to exist
